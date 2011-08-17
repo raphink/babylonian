@@ -1,0 +1,49 @@
+\ProvidesPackage{babyloniannum}
+\RequirePackage{fontspec}
+\RequirePackage{xunicode}
+\RequirePackage{numname}
+
+\newcommand{\babylonianfont}{Santakku}
+
+\newcommand{\babyloniandisp}[1]{%
+  \fontspec{\babylonianfont}{\char"#1}}
+
+\newcommand{\babyloniannum}[1]{%
+\numdigits{#1}%
+\def\babyunits{}%
+\ifcase\c@xsm@mctr
+  \or
+  \babyloniandisp{1230B} %10
+  \or
+  \babyloniandisp{1230B}\kern-1.5pt{}\babyloniandisp{1230B} %20 -- unknown?
+  \or
+  \babyloniandisp{1230D} %30
+  \or
+  \babyloniandisp{1240F} %40
+  \or
+  \babyloniandisp{12410} %40
+\fi
+\kern-4pt{}%
+\ifcase\c@ism@mctr
+  \or
+  \babyloniandisp{12079} %1
+  \or
+  \babyloniandisp{1222B} %2
+  \or
+  \babyloniandisp{12408} %3
+  \or
+  \babyloniandisp{120FB} %4
+  \or
+  \babyloniandisp{1240A} %5
+  \or
+  \babyloniandisp{1240B} %6
+  \or
+  \babyloniandisp{1240C} %7
+  \or
+  \babyloniandisp{1240D} %8
+  \or
+  \babyloniandisp{1240E} %9
+\fi
+}
+
+

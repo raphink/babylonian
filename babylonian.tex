@@ -1,0 +1,27 @@
+\documentclass[paper=a4]{minimal}
+
+\usepackage{pgffor}
+\usepackage{babyloniannum}
+
+
+\begin{document}
+
+\begin{minipage}{0.2\textwidth}
+\noindent\foreach \n in {1,...,20}{%
+\n\quad\babyloniannum{\n}\\
+}
+\end{minipage}
+\begin{minipage}{0.2\textwidth}
+\noindent\foreach \n in {21,...,40}{%
+\n\quad\babyloniannum{\n}\\
+}
+\end{minipage}
+\begin{minipage}{0.2\textwidth}
+\noindent\foreach \n in {41,...,59}{%
+\n\quad\babyloniannum{\n}\\
+}
+\end{minipage} \hfill
+
+\end{document}
+
+

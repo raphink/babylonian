@@ -26,7 +26,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{babyloniannum}
 %<*package>
-    [2011/08/17 0.2 Typeset Babylonian numerals with XeTeX and LuaTeX]
+    [2011/08/17 0.3 Typeset Babylonian numerals with XeTeX and LuaTeX]
 %</package>
 %
 %<*driver>
@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{51}
+% \CheckSum{56}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -64,6 +64,7 @@
 %   Right brace   \}     Tilde         \~}
 %
 %
+% \changes{0.3}{2011/08/17}{Add counter function}
 % \changes{0.2}{2011/08/17}{Improved documentation}
 % \changes{0.1}{2011/08/17}{Initial release}
 %
@@ -75,14 +76,14 @@
 % \author{Raphaël Pinson \\ \url{raphink@gmail.com}}
 % \date{\fileversion~from \filedate}
 %
-% \renewcommand{\thesection}{\protect\babyloniannum{\arabic{section}}}
+% \renewcommand{\thesection}{\babylonian{section}}
 %
 % \maketitle
 %
 % \section{Introduction}
 %
 % This package can be used to typeset Babylonian numerals
-% using \XeTeX or \LuaTeX.
+% using \XeTeX{} or \LuaTeX{}.
 % It makes use of the Santakku Paleo-Babylonian font which can be downloaded
 % at \url{http://www.hethport.uni-wuerzburg.de/cuneifont/}.
 %
@@ -102,6 +103,17 @@
 % as argument and typesets it with Babylonian numerals.
 %
 % Example usage: \verb!\babyloninannum{32}!
+%
+% \DescribeMacro{\babylonian}
+%
+% Like \verb!\arabic! or \verb!\roman!, this macro takes a counter
+% name as argument and returns its Babylonian representation (only from
+% 1 to 59 though).
+%
+% For example, this documentation is typeset with:
+% \begin{verbatim}
+%   \renewcommand{\thesection}{\babylonian{section}}
+% \end{verbatim}
 % 
 % \DescribeMacro{\babyloniandisp}
 %
@@ -160,6 +172,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\babylonian}
+%    \begin{macrocode}
+\newcommand{\babylonian}[1]{%
+  \protect\babyloniannum{\arabic{#1}}}
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\babyloniannum}
 %    \begin{macrocode}

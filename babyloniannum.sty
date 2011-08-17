@@ -20,7 +20,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{babyloniannum}
-    [2011/08/17 0.1 Typeset Babylonian numerals with XeTeX and LuaTeX]
+    [2011/08/17 0.3 Typeset Babylonian numerals with XeTeX and LuaTeX]
 \ProvidesPackage{babyloniannum}
 \RequirePackage{fontspec}
 \RequirePackage{xunicode}
@@ -28,6 +28,8 @@
 \newcommand{\babylonianfont}{Santakku}
 \newcommand{\babyloniandisp}[1]{%
   \fontspec{\babylonianfont}{\char"#1}}
+\newcommand{\babylonian}[1]{%
+  \protect\babyloniannum{\arabic{#1}}}
 \newcommand{\babyloniannum}[1]{%
 \numdigits{#1}%
 \ifcase\c@xsm@mctr

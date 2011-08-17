@@ -26,13 +26,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{babyloniannum}
 %<*package>
-    [2011/08/17 0.1 Typeset Babylonian numerals with XeTeX]
+    [2011/08/17 0.1 Typeset Babylonian numerals with XeTeX and LuaTeX]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{babyloniannum}[2011/08/17]
 \usepackage{metalogo}
+\usepackage{pgffor}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -73,11 +74,14 @@
 % \author{Raphaël Pinson \\ \url{raphink@gmail.com}}
 % \date{\fileversion~from \filedate}
 %
+% \renewcommand{\thesection}{\protect\babyloniannum{\arabic{section}}}
+%
 % \maketitle
 %
 % \section{Introduction}
 %
-% This package can be used to typeset Babylonian numerals using \XeTeX.
+% This package can be used to typeset Babylonian numerals
+% using \XeTeX or \LuaTeX.
 % It makes use of the Santakku Paleo-Babylonian font which can be downloaded
 % at \url{http://www.hethport.uni-wuerzburg.de/cuneifont/}.
 %
@@ -89,11 +93,42 @@
 % Set the font used. Currently, only the Santakku font has been tested.
 % Let me know if you get the package to work with other fonts.
 %
+% Example usage: \verb!\babyloninanfont{Santakku}!
+%
 % \DescribeMacro{\babyloniannum}
 %
 % This is the main macro of this package. It takes a number between 1 and 59
 % as argument and typesets it with Babylonian numerals.
+%
+% Example usage: \verb!\babyloninannum{32}!
 % 
+% \DescribeMacro{\babyloniandisp}
+%
+% This macro lets you print Babylonian characters using their unicode
+% reference. It is used by \verb!\babyloniannum! to display Babylonian
+% numbers.
+%
+% Example usage: \verb!\babyloninandisp{1230B}!
+%
+% \section{Table of characters}
+%
+% Below is the full list of Babylonian characters this package can typeset:
+%
+% \begin{minipage}{0.3\textwidth}
+% \noindent\foreach \n in {1,...,20}{%
+% \n\quad\babyloniannum{\n}\\
+% }
+% \end{minipage} \hfill
+% \begin{minipage}{0.3\textwidth}
+% \noindent\foreach \n in {21,...,40}{%
+% \n\quad\babyloniannum{\n}\\
+% }
+% \end{minipage} \hfill
+% \begin{minipage}{0.3\textwidth}
+% \noindent\foreach \n in {41,...,59}{%
+% \n\quad\babyloniannum{\n}\\
+% }
+% \end{minipage}
 %
 % \StopEventually{}
 %

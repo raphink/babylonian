@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{56}
+% \CheckSum{124}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -179,10 +179,11 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\babyloniannum}
+% \begin{macro}{\babylonianglyph}
 %    \begin{macrocode}
-\newcommand{\babyloniannum}[1]{%
-\numdigits{#1}%
+\newcommand{\babylonianglyph}[1]{%
+\chardef\m@mten=10 % cuts by units of 10
+\numdigits{#1} % parse number
 \ifcase\c@xsm@mctr
   \or
   \babyloniandisp{1230B} %10
@@ -195,7 +196,11 @@
   \or
   \babyloniandisp{12410} %50
 \fi
-\kern-4pt{}%
+\ifnum \c@ism@mctr > \z@
+  \ifnum \c@xsm@mctr > \z@
+\kern-1em{} % make glyphs closer
+  \fi
+\fi
 \ifcase\c@ism@mctr
   \or
   \babyloniandisp{12079} %1
@@ -216,6 +221,53 @@
   \or
   \babyloniandisp{1240E} %9
 \fi
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\babylonian@setcounters}
+%    \begin{macrocode}
+\newcounter{baby@ism@mctr}  % "units"
+\newcounter{baby@xsm@mctr}  % "tens"
+\newcounter{baby@csm@mctr}  % "hundreds"
+\newcounter{baby@ksm@mctr}  % "thousands"
+\newcounter{baby@xksm@mctr} % "ten thousands"
+\newcounter{baby@cksm@mctr} % "hundred thousands"
+\newcounter{baby@msm@mctr}  % "millions"
+\newcounter{baby@xmsm@mctr} % "ten millions"
+\newcounter{baby@cmsm@mctr} % "hundred millions"
+\newcounter{baby@bsm@mctr}  % "billions"
+\newcommand{\babylonian@setcounters}{%
+  \setcounter{baby@ism@mctr}{\c@ism@mctr}%
+  \setcounter{baby@xsm@mctr}{\c@xsm@mctr}%
+  \setcounter{baby@csm@mctr}{\c@csm@mctr}%
+  \setcounter{baby@ksm@mctr}{\c@ksm@mctr}%
+  \setcounter{baby@xksm@mctr}{\c@xksm@mctr}%
+  \setcounter{baby@cksm@mctr}{\c@cksm@mctr}%
+  \setcounter{baby@msm@mctr}{\c@msm@mctr}%
+  \setcounter{baby@xmsm@mctr}{\c@xmsm@mctr}%
+  \setcounter{baby@cmsm@mctr}{\c@cmsm@mctr}%
+  \setcounter{baby@bsm@mctr}{\c@bsm@mctr}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\babyloniannum}
+%    \begin{macrocode}
+\newcommand{\babyloniannum}[1]{%
+  \chardef\m@mten=60 % Cut by units of 60
+  \numdigits{#1} % Parse number
+  \babylonian@setcounters%
+  \babylonianglyph{\c@baby@bsm@mctr}%
+  \babylonianglyph{\c@baby@cmsm@mctr}%
+  \babylonianglyph{\c@baby@xmsm@mctr}%
+  \babylonianglyph{\c@baby@msm@mctr}%
+  \babylonianglyph{\c@baby@cksm@mctr}%
+  \babylonianglyph{\c@baby@xksm@mctr}%
+  \babylonianglyph{\c@baby@ksm@mctr}%
+  \babylonianglyph{\c@baby@csm@mctr}%
+  \babylonianglyph{\c@baby@xsm@mctr}%
+  \babylonianglyph{\c@baby@ism@mctr}%
 }
 %    \end{macrocode}
 % \end{macro}

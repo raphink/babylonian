@@ -26,7 +26,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{babyloniannum}
 %<*package>
-    [2011/08/17 0.3 Typeset Babylonian numerals with XeTeX and LuaTeX]
+    [2011/08/18 0.4 Typeset Babylonian numerals with XeTeX and LuaTeX]
 %</package>
 %
 %<*driver>
@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{124}
+% \CheckSum{138}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -64,6 +64,7 @@
 %   Right brace   \}     Tilde         \~}
 %
 %
+% \changes{0.4}{2011/08/18}{To infinity and beyond}
 % \changes{0.3}{2011/08/17}{Add counter function}
 % \changes{0.2}{2011/08/17}{Improved documentation}
 % \changes{0.1}{2011/08/17}{Initial release}
@@ -77,6 +78,7 @@
 % \date{\fileversion~from \filedate}
 %
 % \renewcommand{\thesection}{\babylonian{section}}
+% \renewcommand{\thesubsection}{\babylonian{section}.\babylonian{subsection}}
 %
 % \maketitle
 %
@@ -84,7 +86,7 @@
 %
 % This package can be used to typeset Babylonian numerals
 % using \XeTeX{} or \LuaTeX{}.
-% It makes use of the Santakku Paleo-Babylonian font which can be downloaded
+% It makes use of the \babylonianfont{} Paleo-Babylonian font which can be downloaded
 % at \url{http://www.hethport.uni-wuerzburg.de/cuneifont/}.
 %
 % \section{Usage}
@@ -92,7 +94,7 @@
 % 
 % \DescribeMacro{\babylonianfont}
 %
-% Set the font used. Currently, only the Santakku font has been tested.
+% Set the font used. Currently, only the \babylonianfont{} font has been tested.
 % Let me know if you get the package to work with other fonts.
 %
 % Example usage: \verb!\babyloninanfont{Santakku}!
@@ -102,44 +104,68 @@
 % This is the main macro of this package. It takes a number between 1 and 59
 % as argument and typesets it with Babylonian numerals.
 %
-% Example usage: \verb!\babyloninannum{32}!
+% Example usage:
+%
+% \verb!\babyloninannum{424000}! is \babyloniannum{424000} (1,57,46,40 in base 60)
+%
+% \verb!\babyloninannum{21609}! is \babyloniannum{21609} (6,0,9 in base 60)
 %
 % \DescribeMacro{\babylonian}
 %
 % Like \verb!\arabic! or \verb!\roman!, this macro takes a counter
-% name as argument and returns its Babylonian representation (only from
-% 1 to 59 though).
+% name as argument and returns its Babylonian representation.
 %
 % For example, this documentation is typeset with:
 % \begin{verbatim}
 %   \renewcommand{\thesection}{\babylonian{section}}
 % \end{verbatim}
 % 
-% \DescribeMacro{\babyloniandisp}
+% \DescribeMacro{\unicodedisp}
 %
-% This macro lets you print Babylonian characters using their unicode
-% reference. It is used by \verb!\babyloniannum! to display Babylonian
-% numbers.
+% This macro lets you print characters using their unicode reference.
+% It is used by \verb!\babyloniannum! to display Babylonian numbers.
 %
-% Example usage: \verb!\babyloninandisp{1230B}!
+% Example usage: \verb!\unicodedisp{1230B}!
 %
+% \section{Known issues}
+%
+% \subsection{Glyph for 20}
+%
+% The glyph for number 20 was not found in the \babylonianfont{} font.
+% Therefore, it has been replaced by the combination of two 10 glyphs,
+% with a kerning adjustment.
+%
+% \subsection{Glyph for 0}
+%
+% The Babylonian system has no glyph for 0, which is represented by a
+% large space. In this package, 0 is implemented as a 0.5em kerning space.
+%
+% \subsection{Multiples of 60}
+%
+% The Babylonian numeral system is a sexagesimal system
+% (a positional base 60 system), which does not feature a glyph for 0.
+% Therefore, a number such as \babyloniannum{23} can stand for
+% $23$, $23 \times 60$ or $23 \times 60 \times 60$ or even $23/60$.
+% Only the context allows to decide which number is represented.
+%
+% \pagebreak
 % \section{Table of characters}
 %
-% Below is the full list of Babylonian characters this package can typeset:
+% Below is a sample list of Babylonian characters this package can typeset:
 %
 % \begin{minipage}{0.3\textwidth}
-% \noindent\foreach \n in {1,...,20}{%
-% \n\quad\babyloniannum{\n}\\
+% \noindent\foreach \n in {1,...,40}{%
+% \n~\babyloniannum{\n}\\
 % }
 % \end{minipage} \hfill
 % \begin{minipage}{0.3\textwidth}
-% \noindent\foreach \n in {21,...,40}{%
-% \n\quad\babyloniannum{\n}\\
+% \noindent\foreach \n in {41,...,80}{%
+% \n~\babyloniannum{\n}\\
 % }
 % \end{minipage} \hfill
 % \begin{minipage}{0.3\textwidth}
-% \noindent\foreach \n in {41,...,59}{%
-% \n\quad\babyloniannum{\n}\\
+% \noindent\foreach \n in {81,...,120}{%
+% \n~\babyloniannum{\n}\\
 % }
 % \end{minipage}
 %
@@ -165,10 +191,9 @@
 % \end{macro}
 %
 %
-% \begin{macro}{\babyloniandisp}
+% \begin{macro}{\unicodedisp}
 %    \begin{macrocode}
-\newcommand{\babyloniandisp}[1]{%
-  \fontspec{\babylonianfont}{\char"#1}}
+\newcommand{\unicodedisp}[1]{\char"#1}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -182,44 +207,52 @@
 % \begin{macro}{\babylonianglyph}
 %    \begin{macrocode}
 \newcommand{\babylonianglyph}[1]{%
-\chardef\m@mten=10 % cuts by units of 10
-\numdigits{#1} % parse number
-\ifcase\c@xsm@mctr
-  \or
-  \babyloniandisp{1230B} %10
-  \or
-  \babyloniandisp{1230B}\kern-1.5pt{}\babyloniandisp{1230B} %20 -- unknown?
-  \or
-  \babyloniandisp{1230D} %30
-  \or
-  \babyloniandisp{1240F} %40
-  \or
-  \babyloniandisp{12410} %50
-\fi
-\ifnum \c@ism@mctr > \z@
-  \ifnum \c@xsm@mctr > \z@
-\kern-1em{} % make glyphs closer
+\ifnum #1 > \z@ % glyph is not zero
+  \chardef\m@mten=10 % cuts by units of 10
+  \numdigits{#1} % parse number
+  \ifcase\c@xsm@mctr %
+    \relax %
+    \or
+    \unicodedisp{1230B} %10
+    \or
+    \unicodedisp{1230B}\kern-1.5pt{}\unicodedisp{1230B} %20 -- unknown?
+    \or
+    \unicodedisp{1230D} %30
+    \or
+    \unicodedisp{1240F} %40
+    \or
+    \unicodedisp{12410} %50
   \fi
-\fi
-\ifcase\c@ism@mctr
-  \or
-  \babyloniandisp{12079} %1
-  \or
-  \babyloniandisp{1222B} %2
-  \or
-  \babyloniandisp{12408} %3
-  \or
-  \babyloniandisp{120FB} %4
-  \or
-  \babyloniandisp{1240A} %5
-  \or
-  \babyloniandisp{1240B} %6
-  \or
-  \babyloniandisp{1240C} %7
-  \or
-  \babyloniandisp{1240D} %8
-  \or
-  \babyloniandisp{1240E} %9
+  \ifnum \c@ism@mctr > \z@ %
+    \ifnum \c@xsm@mctr > \z@ %
+  \kern-0.5em{} % make glyphs closer
+    \fi %
+  \fi %
+  \ifcase\c@ism@mctr %
+    \or
+    \unicodedisp{12079} %1
+    \or
+    \unicodedisp{1222B} %2
+    \or
+    \unicodedisp{12408} %3
+    \or
+    \unicodedisp{120FB} %4
+    \or
+    \unicodedisp{1240A} %5
+    \or
+    \unicodedisp{1240B} %6
+    \or
+    \unicodedisp{1240C} %7
+    \or
+    \unicodedisp{1240D} %8
+    \or
+    \unicodedisp{1240E} %9
+  \fi
+  \addtocounter{baby@glyphs}{1}%
+\else
+  \ifnum\c@baby@glyphs > \z@ %
+\kern0.5em{}% empty space for zero
+  \fi
 \fi
 }
 %    \end{macrocode}
@@ -254,10 +287,14 @@
 %
 % \begin{macro}{\babyloniannum}
 %    \begin{macrocode}
+\newcounter{baby@glyphs}%
 \newcommand{\babyloniannum}[1]{%
   \chardef\m@mten=60 % Cut by units of 60
   \numdigits{#1} % Parse number
   \babylonian@setcounters%
+  {\fontspec{\babylonianfont}%
+  \mbox{%
+  \setcounter{baby@glyphs}{0}%
   \babylonianglyph{\c@baby@bsm@mctr}%
   \babylonianglyph{\c@baby@cmsm@mctr}%
   \babylonianglyph{\c@baby@xmsm@mctr}%
@@ -268,6 +305,7 @@
   \babylonianglyph{\c@baby@csm@mctr}%
   \babylonianglyph{\c@baby@xsm@mctr}%
   \babylonianglyph{\c@baby@ism@mctr}%
+  }}
 }
 %    \end{macrocode}
 % \end{macro}

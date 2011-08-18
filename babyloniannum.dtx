@@ -127,27 +127,6 @@
 %
 % Example usage: \verb!\unicodedisp{1230B}!
 %
-% \section{Known issues}
-%
-% \subsection{Glyph for 20}
-%
-% The glyph for number 20 was not found in the \babylonianfont{} font.
-% Therefore, it has been replaced by the combination of two 10 glyphs,
-% with a kerning adjustment.
-%
-% \subsection{Glyph for 0}
-%
-% The Babylonian system has no glyph for 0, which is represented by a
-% large space. In this package, 0 is implemented as a 0.5em kerning space.
-%
-% \subsection{Multiples of 60}
-%
-% The Babylonian numeral system is a sexagesimal system
-% (a positional base 60 system), which does not feature a glyph for 0.
-% Therefore, a number such as \babyloniannum{23} can stand for
-% $23$, $23 \times 60$ or $23 \times 60 \times 60$ or even $23/60$.
-% Only the context allows to decide which number is represented.
-%
 % \pagebreak
 % \section{Table of characters}
 %
@@ -168,6 +147,27 @@
 % \n~\babyloniannum{\n}\\
 % }
 % \end{minipage}
+%
+% \section{Known issues}
+%
+% \subsection{Glyph for 20}
+%
+% The glyph for number 20 was not found in the \babylonianfont{} font.
+% Therefore, it has been replaced by the combination of two 10 glyphs,
+% with a kerning adjustment.
+%
+% \subsection{Glyph for 0}
+%
+% The Babylonian system has no glyph for 0, which is represented by a
+% large space. In this package, 0 is implemented as a 0.5em kerning space.
+%
+% \subsection{Multiples of 60}
+%
+% The Babylonian numeral system is a sexagesimal system
+% (a positional base 60 system), which does not feature a glyph for 0.
+% Therefore, a number such as \babyloniannum{23} can stand for
+% $23$, $23 \times 60$ or $23 \times 60 \times 60$ or even $23/60$.
+% Only the context allows to decide which number is represented.
 %
 % \StopEventually{}
 %
